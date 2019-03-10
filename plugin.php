@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Banner Arrow [BonSeo Block]
- * Plugin URI: https://www.bonseo.es/wordpress-gutenberg-blocks/arrow-banner
- * Description: Un banner simple en forma de flecha
+ * Plugin Name: Banner Title [BonSeo Block]
+ * Plugin URI: https://www.bonseo.es/wordpress-gutenberg-blocks/title-brand
+ * Description: Los títulos coloridos y con imágenes
  * Author: jjlmoya
  * Author URI: https://www.bonseo.es/
  * Version: 1.0.0

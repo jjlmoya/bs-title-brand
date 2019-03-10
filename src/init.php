@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-$block = 'block-bs-arrow-banner';
+$block = 'block-bs-title-brand';
 
 // Hook server side rendering into render callback
 register_block_type('bonseo/' . $block,
@@ -22,13 +22,16 @@ register_block_type('bonseo/' . $block,
 			'title' => array(
 				'type' => 'string',
 			),
+			'claim' => array(
+				'type' => 'string',
+			),
 			'content' => array(
 				'type' => 'string',
 			),
-			'cta' => array(
+			'image' => array(
 				'type' => 'string',
 			),
-			'url' => array(
+			'brand' => array(
 				'type' => 'string',
 			),
 			'className' => array(
@@ -36,27 +39,9 @@ register_block_type('bonseo/' . $block,
 			)
 
 		),
-		'render_callback' => 'render_bs_arrow_banner',
+		'render_callback' => 'render_bs_title_brand',
 	)
 );
-
-
-/**
- * Enqueue Gutenberg block assets for both frontend + backend.
- *
- * @uses {wp-editor} for WP editor styles.
- * @since 1.0.0
- */
-function bs_arrow_banner_assets()
-{
-	wp_enqueue_style(
-		'bs_arrow_banner-style-css',
-		plugins_url('dist/blocks.style.build.css', dirname(__FILE__)),
-		array('wp-editor')
-	);
-}
-
-add_action('enqueue_block_assets', 'bs_arrow_banner_assets');
 
 /**
  * Enqueue Gutenberg block assets for backend editor.
@@ -67,51 +52,49 @@ add_action('enqueue_block_assets', 'bs_arrow_banner_assets');
  * @uses {wp-editor} for WP editor styles.
  * @since 1.0.0
  */
-function bs_arrow_banner_editor_assets()
+function bs_title_brand_editor_assets()
 { // phpcs:ignore
 	// Scripts.
 	wp_enqueue_script(
-		'bs_arrow_banner-block-js', // Handle.
+		'bs_title_brand-block-js', // Handle.
 		plugins_url('/dist/blocks.build.js', dirname(__FILE__)), // Block.build.js: We register the block here. Built with Webpack.
 		array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor'), // Dependencies, defined above.
 		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ), // Version: File modification time.
 		true // Enqueue the script in the footer.
 	);
-
-	// Styles.
-	wp_enqueue_style(
-		'bs_arrow_banner-block-editor-css', // Handle.
-		plugins_url('dist/blocks.editor.build.css', dirname(__FILE__)), // Block editor CSS.
-		array('wp-edit-blocks') // Dependency to include the CSS after it.
-	// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: File modification time.
-	);
 }
 
-function render_bs_arrow_banner($attributes)
+function render_bs_title_brand($attributes)
 {
 	$title = isset($attributes['title']) ? $attributes['title'] : '';
 	$content = isset($attributes['content']) ? $attributes['content'] : '';
-	$cta = isset($attributes['cta']) ? $attributes['cta'] : '';
-	$url = isset($attributes['url']) ? $attributes['url'] : '';
+	$brand = isset($attributes['brand']) ? $attributes['brand'] : '';
+	$claim = isset($attributes['claim']) ? $attributes['claim'] : '';
+	$image = isset($attributes['image']) ? $attributes['image'] : '';
 	$class = isset($attributes['className']) ? ' ' . $attributes['className'] : '';
-
-
-	return '
-		<section class="og-banner-arrow' . $class . '">
-			<div class="og-banner-arrow__simple a-pad">
-				<h2 class="a-text a-text--xl a-text--secondary a-text--center">
-					' . $title . '
-				</h2>
-				<p class="a-text a-text--center a-text--secondary">
-					' . $content . '
-				</p>
+	return '<section class="og-title-brand
+                a-bg a-bg--gradient--light a-bg--animated
+                l-flex l-flex--direction-column
+                bs_viewport a-mi a-mi--left ' . $brand . ' ' . $class . '">
+		<div class="og-title-brand__heading l-column--1-1">
+			<h1 class="a-text a-text--bold a-text--secondary l-flex l-flex--direction-column a-text--center l-flex--align-center a-pad-20">
+				<span class="og-title__claim l-column--1-2 l-column--mobile--1-1 a-text--m">' . $claim . '</span>
+				<span class="og-title__title l-column--1-2 l-column--mobile--1-1 a-text--xl ">' . $title . '</span>
+			</h1>
+		</div>
+		
+		<div class="og-title-brand__content l-flex l-flex--direction-row l-flex--mobile--wrap">
+			<div class="og-title-brand__content__description
+						l-column--1-2 l-column--mobile--1-1 l-flex-item--align-center
+						a-text--secondary a-pad-20">
+				' . $content . '
 			</div>
-			<div class="og-banner-arrow__edge  l-flex l-flex--justify-center a-pad">
-				<a href="' . $url . '" class="a-button a-button--rounded a-button a-button--s a-button--secondary a-mar--y--bottom-40">
-					' . $cta . '
-				</a>
+			<picture class="l-column--1-2 a-text--center l-column--mobile--1-1 a-pad-0 lazy">
+				<img class="a-image l-column--1-2 "
+				 src="' . $image . '">
+			</picture>    
 			</div>
 		</section>';
 }
 
-add_action('enqueue_block_editor_assets', 'bs_arrow_banner_editor_assets');
+add_action('enqueue_block_editor_assets', 'bs_title_brand_editor_assets');

@@ -5,47 +5,75 @@
  * Simple block, renders and saves the same content without any interactivity.
  */
 
-import './style.scss';
-import './editor.scss';
 
 const {__} = wp.i18n;
 const {registerBlockType} = wp.blocks;
 const {TextControl} = wp.components;
-registerBlockType('bonseo/block-bs-arrow-banner', {
-	title: __('Banner Arrow'),
+const {MediaUpload, RichText} = wp.editor;
+registerBlockType('bonseo/block-bs-title-brand', {
+	title: __('Title brand'),
 	icon: 'editor-quote',
 	category: 'bonseo-blocks',
 	keywords: [
-		__('bs-banner-arrow'),
+		__('bs-title-brand'),
 		__('BonSeo'),
 		__('BonSeo Block'),
 	],
 	edit: function ({posts, className, attributes, setAttributes}) {
+		function onImageSelect(imageObject) {
+			setAttributes({
+				image: imageObject.sizes.full.url
+			})
+		};
+		function drawImageButton(open) {
+			var html;
+			if (attributes.image) {
+				html = <img src={attributes.image}/>;
+			} else {
+				html = "Upload";
+			}
+
+			return (<button onClick={open}>
+				{html}
+			</button>)
+
+		}
 		return (
 			<div>
 				<TextControl
 					className={`${className}__title`}
-					label={__('Título del banner')}
+					label={__('Título')}
 					value={attributes.title}
 					onChange={title => setAttributes({title})}
 				/>
 				<TextControl
+					className={`${className}__claim`}
+					label={__('Subtitulo')}
+					value={attributes.claim}
+					onChange={claim => setAttributes({claim})}
+				/>
+				<RichText
+					multiline="p"
 					className={`${className}__content`}
-					label={__('Frase del banner')}
+					label={__('Frase más importante de todas')}
 					value={attributes.content}
 					onChange={content => setAttributes({content})}
+					placeholder={ __( 'Enter text...', 'block-bs-content-simple' ) }
+					keepPlaceholderOnFocus={true}
 				/>
 				<TextControl
-					className={`${className}__cta`}
-					label={__('CTA')}
-					value={attributes.cta}
-					onChange={cta => setAttributes({cta})}
+					className={`${className}__brand`}
+					label={__('Elige el brand, por defecto el de tu tema')}
+					value={attributes.brand}
+					onChange={brand => setAttributes({brand})}
 				/>
-				<TextControl
-					className={`${className}__url`}
-					label={__('Url o Email(mailto:)')}
-					value={attributes.url}
-					onChange={url => setAttributes({url})}
+				<MediaUpload
+					onSelect={onImageSelect}
+					type="image"
+					value={attributes.image}
+					render={({open}) => (
+						drawImageButton(open)
+					)}
 				/>
 			</div>
 		);
