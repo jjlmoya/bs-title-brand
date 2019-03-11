@@ -25,6 +25,7 @@ registerBlockType('bonseo/block-bs-title-brand', {
 				image: imageObject.sizes.full.url
 			})
 		};
+
 		function drawImageButton(open) {
 			var html;
 			if (attributes.image) {
@@ -38,6 +39,7 @@ registerBlockType('bonseo/block-bs-title-brand', {
 			</button>)
 
 		}
+
 		return (
 			<div>
 				<TextControl
@@ -58,7 +60,7 @@ registerBlockType('bonseo/block-bs-title-brand', {
 					label={__('Frase más importante de todas')}
 					value={attributes.content}
 					onChange={content => setAttributes({content})}
-					placeholder={ __( 'Enter text...', 'block-bs-content-simple' ) }
+					placeholder={__('Enter text...', 'block-bs-content-simple')}
 					keepPlaceholderOnFocus={true}
 				/>
 				<TextControl
