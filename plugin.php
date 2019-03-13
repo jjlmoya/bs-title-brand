@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Banner Title [BonSeo Block]
- * Plugin URI: https://www.bonseo.es/wordpress-gutenberg-blocks/title-brand
+ * Plugin URI: https://www.bonseo.es/bloques-gutenberg/title-brand
  * Description: Los títulos coloridos y con imágenes
  * Author: jjlmoya
  * Author URI: https://www.bonseo.es/
