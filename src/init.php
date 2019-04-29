@@ -37,7 +37,6 @@ register_block_type('bonseo/' . $block,
 			'className' => array(
 				'type' => 'string',
 			)
-
 		),
 		'render_callback' => 'render_bs_title_brand',
 	)
