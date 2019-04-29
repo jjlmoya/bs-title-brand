@@ -74,7 +74,7 @@ function render_bs_title_brand($attributes)
 	$class = isset($attributes['className']) ? ' ' . $attributes['className'] : '';
 	return '<section class="og-title-brand
                 a-bg a-bg--gradient--light
-                l-flex l-flex--direction-column
+                l-flex l-flex--direction-column l-grid-column--full
                 bs_viewport a-mi a-mi--left ' . $brand . ' ' . $class . '">
 		<div class="og-title-brand__heading l-column--1-1">
 			<h1 class="a-text a-text--bold a-text--secondary l-flex l-flex--direction-column a-text--center l-flex--align-center a-pad-20">
